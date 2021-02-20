@@ -213,6 +213,7 @@ class RentACar:
             #write information to the board
             self.window_rent_registration.listWidget.addItem(info_db_rent)
             self.window_main.listWidget.addItem(info_db_rent)
+            
         else : #if not validate, inform user
             #write information to the board
             self.window_rent_registration.listWidget.addItem(info_rent_val)
@@ -245,9 +246,12 @@ class RentACar:
     def rent_close_read_id(self):
         #read id to close
         id_to_close = self.window_rent_close.lineEdit.text()
+        #read kilometers
+        kilometers = self.window_rent_close.lineEdit_2.text()
+        
         #close from data base
         r=Rents(None,None,None)
-        rent_close=r.rent_close(id_to_close)
+        rent_close=r.rent_close(id_to_close,kilometers)
         #show close information in windows
         self.window_main.listWidget.addItem(rent_close)
         self.window_rent_close.listWidget.addItem(rent_close)
