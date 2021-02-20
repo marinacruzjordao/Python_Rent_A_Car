@@ -12,8 +12,8 @@ class Email:
         
     def email_open_rent(self):
     
-        email ='rentacarpython@gmail.com'
-        password  ='rentacar2021'
+        email ='EMAIL'
+        password  ='PASSWORD'
 
         #configure html email template to send
         with open ('email_template.html','r') as html:
@@ -46,8 +46,8 @@ class Email:
     
     def email_close_rent(self):
     
-        email ='rentacarpython@gmail.com'
-        password  ='rentacar2021'
+        email ='EMAIL'
+        password  ='PASSWORD'
 
         #configure html email template to send
         with open ('email_template_close.html','r') as html:
