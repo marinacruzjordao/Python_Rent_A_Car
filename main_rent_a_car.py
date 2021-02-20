@@ -17,6 +17,7 @@ class RentACar:
         self.window_client_registration = uic.loadUi('client_regs.ui')
         self.window_client_delete = uic.loadUi('client_delete.ui')
         self.window_rent_registration = uic.loadUi('rent_regs.ui')
+        self.window_rent_close = uic.loadUi('rent_close.ui')
 
 
         #button car registration 
@@ -39,6 +40,12 @@ class RentACar:
 
         #button rent registration
         self.window_main.pushButton_3.clicked.connect(self.rent_registration) 
+
+        #button rent list
+        self.window_main.pushButton_6.clicked.connect(self.rents_list)
+
+        #button close rent 
+        self.window_main.pushButton_9.clicked.connect(self.rent_close) 
 
         self.window_main.show()
         app.exec()
@@ -195,6 +202,7 @@ class RentACar:
         self.rent_days = self.window_rent_registration.lineEdit_3.text()
         
         r=Rents(self.rent_car_id, self.rent_client_id, self.rent_days)
+        r.rents_data_base_connection()
         #rent validation
         info_rent_val, rent_status = r.rents_parameters_validation()
 
@@ -210,5 +218,38 @@ class RentACar:
             self.window_rent_registration.listWidget.addItem(info_rent_val)
             self.window_main.listWidget.addItem(info_rent_val) 
 
+    #rent list    
+    def rents_list(self):
+        r=Rents(None,None,None)
+        aux_rents=r.rents_list()
+        
+        self.window_main.listWidget.addItem('')
+        self.window_main.listWidget.addItem('RENTS LIST')
+ 
+        for i in aux_rents:
+            self.window_main.listWidget.addItem('_________________')
+            for k in i:
+                #print(k,':',i[k])
+                b=str(k)+'  '+str(i[k])
+                self.window_main.listWidget.addItem(b)
+
+    #rent close window process
+    def rent_close(self):
+        #show window rent close
+        self.window_rent_close.show()
+        #button close
+        self.window_rent_close.pushButton.clicked.connect(self.rent_close_read_id)
+
+
+    #Rent close process
+    def rent_close_read_id(self):
+        #read id to close
+        id_to_close = self.window_rent_close.lineEdit.text()
+        #close from data base
+        r=Rents(None,None,None)
+        rent_close=r.rent_close(id_to_close)
+        #show close information in windows
+        self.window_main.listWidget.addItem(rent_close)
+        self.window_rent_close.listWidget.addItem(rent_close)
 
 c=RentACar()
